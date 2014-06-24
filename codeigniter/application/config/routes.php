@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "twitterlogin/login";
+$route['default_controller'] = "twitterlogin/index";
 $route['404_override'] = '';
 
 
