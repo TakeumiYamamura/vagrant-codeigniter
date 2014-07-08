@@ -4,34 +4,40 @@ class Twitter_members_model extends CI_Model{
     {
         parent::__construct();
         $this->load->database();
+        //$this->load->library('session'); なぜかエラーが生じる
+        //session start();
     }
     function login()
     {
         $this->db->select('*')->from('members')->where(array('password'=>$_POST['password'],'email'=>$_POST['email'],));
         $query =$this->db->get();
+        //var_dump($query);
         if($query->num_rows() != 0){
-           $this->load->view('formsuccess');
-           //setcookie('myId');
-           return true;
+           $row = $query->row_array();
+           setcookie('id',$row['id'],time() +60 * 60);
+           setcookie('name',$row['name'],time() +60 * 60);
         }
-								$this->load->view('login');
     }
     function register_db($data)
     {       
         $this->db->insert('members',$data);
         //$this->session->set_userdata($data);
         //echo $thid->session->userdata('email');
+        $this->db->select('*')->from('members')->where('name',$data['name']);
+        $query =$this->db->get();
+        $row = $query->row_array();
+        setcookie('id',$row['id'],time() +60 * 60);
+        setcookie('name',$data['name'],time() +60 * 60);
      }
-     function email_validation($str)
+    function email_validation($str)
      {
+        $this->load->library('form_validation');
         $this->db->select('*')->from('members')->where('email',$str);
         $query =$this->db->get();
-        if($query->num_rows() != NULL){
-            $this->form_validation->set_message('email_check', 'すでに登録したメールアドレスは使えません');
-            return false;
-        }
-        return true;
+        return($query);
+
       }
+
 
 
     /*function set_customer_info($data)//登録フォームでの入力データをセッションに保存
