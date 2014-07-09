@@ -8,6 +8,7 @@ body{
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  background-attachment: fixed;
 }
 #tweet{
   text-shadow: 3px 3px 5px black;
@@ -16,6 +17,9 @@ body{
 }
 p{
   text-align: center;
+  color: white;
+}
+legend{
   color: white;
 }
 </style>
@@ -30,7 +34,22 @@ $.ajax({
   success: function(json){
     var html = '';
     for(i in json){
-      html +='<li> '+ json[json.length-i-1].name +'</li><dt><p>'+json[json.length-i-1].message+'</p>';
+      var now =new Date();
+      var tweettime = new Date(json[json.length-i-1].modified);
+      difference = now.getTime()-tweettime.getTime();
+      if (difference > 1000*60*60*24){
+        var day = Math.floor(difference /(1000*60*60*24));
+        html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+day+'日前</p></fieldset>';
+      } else if (difference > 1000*60*60){
+        var hour = Math.floor(difference/(1000*60*60));
+        html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+hour+'時間前</p></fieldset>';
+      } else if(difference > 1000*60){
+        var minute =Math.floor(difference/(1000*60));
+        html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+minute+'分前</p></fieldset>';
+      } else {
+        var second =Math.floor(difference/(1000));
+        html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+second+'秒前</p></fieldset>';
+      }
       if(i>=9) break; 
     }
     $('#message').html('<ul>'+html+'</ul>');
@@ -66,7 +85,7 @@ $.ajax({
 
 <script type ="text/javascript">
 $("#send_button").click(function(){
-  alert(page);
+  //alert(page);
   var m = $("#talk").val();
   if(m != ""){
     $.ajax({
@@ -79,14 +98,32 @@ $("#send_button").click(function(){
       url: '/index.php/twittermain/get_list',
       dataType: 'json',
       async: true,
-      success: function(json){
-        var html = '';
-        for(i in json){
-          html +='<li> '+ json[json.length-i-1].name +'</li><dt><p>'+json[json.length-i-1].message+'</p>';
-          if(i>=10*page-1) break; 
+    success: function(json){
+      //console.log(now);
+      var html = '';
+      for(i in json){
+        var now =new Date();
+        var tweettime = new Date(json[json.length-i-1].modified);
+        //console.log(tweettime);
+        difference = now.getTime()-tweettime.getTime();
+        if (difference > 1000*60*60*24){
+          var day = Math.floor(difference /(1000*60*60*24));
+          html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+day+'日前</p></fieldset>';
+        } else if (difference > 1000*60*60){
+          var hour = Math.floor(difference/(1000*60*60));
+          html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+hour+'時間前</p></fieldset>';
+        } else if(difference > 1000*60){
+          var minute =Math.floor(difference/(1000*60));
+          html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+minute+'分前</p></fieldset>';
+        } else {
+          var second =Math.floor(difference/(1000));
+          html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+second+'秒前</p></fieldset>';
         }
-        $('#message').html('<ul>'+html+'</ul>');
-      },
+        // html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+json[json.length-i-1].modified+'</p></fieldset>';
+        if(i>=(10*page-1)) break; 
+      }
+      $('#message').html('<ul>'+html+'</ul>');
+    },
       error: function(){
         alert('データの読み込みに失敗しました。');
   　   }
@@ -96,7 +133,6 @@ $("#send_button").click(function(){
 
 $("#count").click(function(){
   page++;
-  alert(page);
   $.ajax({
     url: '/index.php/twittermain/get_list',
     dataType: 'json',
@@ -104,8 +140,23 @@ $("#count").click(function(){
     success: function(json){
       var html = '';
       for(i in json){
-        html +='<li> '+ json[json.length-i-1].name +'</li><dt><p>'+json[json.length-i-1].message+'</p>';
-        if(i>=10*page-1) break; 
+        var now =new Date();
+        var tweettime = new Date(json[json.length-i-1].modified);
+        difference = now.getTime()-tweettime.getTime();
+        if (difference > 1000*60*60*24){
+          var day = Math.floor(difference /(1000*60*60*24));
+          html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+day+'日前</p></fieldset>';
+        } else if (difference > 1000*60*60){
+          var hour = Math.floor(difference/(1000*60*60));
+          html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+hour+'時間前</p></fieldset>';
+        } else if(difference > 1000*60){
+          var minute =Math.floor(difference/(1000*60));
+          html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+minute+'分前</p></fieldset>';
+        } else {
+          var second =Math.floor(difference/(1000));
+          html +='<fieldset><legend>'+ json[json.length-i-1].name +'</legend><dt><p>'+json[json.length-i-1].message+'</p><dt><p>'+second+'秒前</p></fieldset>';
+        }
+        if(i>=(10*page-1)) break; 
       }
       $('#message').html('<ul>'+html+'</ul>');
     },
