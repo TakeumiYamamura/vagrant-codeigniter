@@ -64,7 +64,7 @@ tweet(page);
 <body>
   <dl id="tweet">
     <dt>こんにちは！<?php echo $this->session->userdata('name'); ?>さん！つぶやいてみよう<dt>
-    <dd> 
+    <dd id="delete"> 
         <textarea type="text" name="message" cols="60" rows="4"  maxlength="140" id="talk"></textarea>
     </dd>
     <p>
@@ -96,7 +96,8 @@ $("#send_button").click(function() {
         tweet(page);
       }
     });
-  } 
+  }
+  $('#delete').html('<textarea type="text" name="message" cols="60" rows="4"  maxlength="140" id="talk"></textarea>'); 
 });
 
 $("#count").click(function(){
