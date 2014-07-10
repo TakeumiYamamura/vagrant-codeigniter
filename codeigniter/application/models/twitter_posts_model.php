@@ -1,26 +1,26 @@
 <?php
-class Twitter_posts_model extends CI_Model{
+class Twitter_posts_model extends CI_Model
+{
     function __construct()
     {
         parent::__construct();
         $this->load->database();
-        session_start();
+        $this->load->library('session');
     }
-    function start()
-    {
-        $data['name'] = $_COOKIE['name'];
-        $data['id']   = $_COOKIE['id'];
 
-    }
-    function register($data)
+    public function register($data)
     {       
         $this->db->insert('posts',$data);
+        return $this->db->insert_id();
     }
-    function get_tweet()
+
+    public function get_tweet()
     {
-        $query =$this->db->get('posts');
+        $this->db->select('*');
+        $this->db->from('posts');
+        $this->db->join('members','members.id = posts.id');
+        $query =$this->db->get();
         $row = $query->result_array();
         return $row;
     }
 }
-?>

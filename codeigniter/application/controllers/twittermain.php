@@ -1,21 +1,19 @@
 <?php
-
 class Twittermain extends CI_Controller
 {
     function __construct()
 	{
 	    parent::__construct();	
 		$this->load->helper(array('form', 'url'));
-		$this->load->library('form_validation');
-		$this->load->library('javascript');
+		$this->load->library(array('form_validation','session','javascript'));
 		$this->load->model('Twitter_posts_model');
 	}
 
 	public function index()
 	{
-        $this->Twitter_posts_model->start();
-        if (!isset($_COOKIE['id'])) {
-        	return redirect("twitterlogin/index");
+		$check = $this->session->userdata('name');
+        if ($check == "") {
+        	return redirect("twitterlogin");
         }
         $this->load->view('formsuccess');	
 	}
@@ -26,17 +24,18 @@ class Twittermain extends CI_Controller
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($json));
-
 	}
 
 	public function register()
 	{
-	    $data['message']  =$_POST['message'];
-	    $data['name']     =$_COOKIE['name'];
-		$data['id']       =$_COOKIE['id'];
-		$this->Twitter_posts_model->register($data);         
+	    $str =$this->input->post('message');
+	    $data['message']=$str;
+		$data['id']     =$this->session->userdata('id');
+	    $this->form_validation->set_rules('message', 'メッセージ', 'trim|required');
+        if($this->form_validation->run() == true){
+        	$data['message'] =str_replace("\n", "<br>", $str);
+        	echo $this->Twitter_posts_model->register($data);
+        }
 	}
+
 }
-
-?>
-
