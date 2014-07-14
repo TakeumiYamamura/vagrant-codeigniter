@@ -77,7 +77,7 @@ tweet(page);
 </div>
 <button id="count">もっと見る</button><dt>
 <p>
-  <a href="twittermain/logout">ログアウト</a>
+  <a href="logout">ログアウト</a>
 </p>
 <script type ="text/javascript">
 $("#send_button").click(function() {
