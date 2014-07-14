@@ -72,16 +72,13 @@ tweet(page);
     </p>
   <dl>
 <h3>たくさんつぶやこう！！</h3>
+<div id="message">
+  <p>ロード中です</p>
+</div>
+<button id="count">もっと見る</button><dt>
 <p>
-  <button id="count">もっと見る</button><dt>
-  <?php
-    echo anchor('twitterlogin', 'ログアウトはこちら');
-  ?>
+  <a href="twittermain/logout">ログアウト</a>
 </p>
-  <div id="message">
-    <p>ロード中です</p>
-  </div>
-
 <script type ="text/javascript">
 $("#send_button").click(function() {
   var m = $("#talk").val();

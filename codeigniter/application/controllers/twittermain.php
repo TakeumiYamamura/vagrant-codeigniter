@@ -38,4 +38,10 @@ class Twittermain extends CI_Controller
         }
 	}
 
+	public function logout()
+	{
+		$this->Twitter_posts_model->session_destroy();
+		redirect("twitterlogin/index");
+	}
+
 }
