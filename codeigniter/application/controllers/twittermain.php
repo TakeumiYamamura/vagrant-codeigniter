@@ -11,9 +11,11 @@ class Twittermain extends CI_Controller
 
 	public function index()
 	{
+		define("base_page", 1);
+		$this->session->set_userdata('page',base_page);
 		$check = $this->session->userdata('name');
         if ($check == "") {
-        	return redirect("twitterlogin");
+        	return redirect(base_url("index.php/twitterlogin/index"));
         }
         $this->load->view('main');	
 	}
@@ -30,11 +32,11 @@ class Twittermain extends CI_Controller
 	public function register()
 	{
 	    $str =$this->input->post('message');
-	    $data['message']=$str;
-		$data['user_id']     =$this->session->userdata('user_id');
+	    $data['message'] = $str;
+		$data['user_id'] = $this->session->userdata('user_id');
 	    $this->form_validation->set_rules('message', 'メッセージ', 'trim|required');
         if($this->form_validation->run() == true){
-        	$data['message'] =str_replace("\n", "<br>", $str);
+        	$data['message'] = str_replace("\n", "<br>", $str);
         	echo $this->Twitter_posts_model->register($data);
         }
 	}

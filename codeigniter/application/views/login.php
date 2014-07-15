@@ -32,7 +32,7 @@
     <?php echo form_error('email');?>
     <input type="text" name="email" value="<?php echo set_value('email'); ?>" size="50" /><br>
     <input type="submit" value="送信" /><br>
-    <a href= "<?php echo(base_url("index.php/twitterregister"));?>">ユーザー登録はこちら</a>
+    <a href="<?php echo(base_url("index.php/twitterregister"));?>">ユーザー登録はこちら</a>
   </h1>
   </form>
   <p>

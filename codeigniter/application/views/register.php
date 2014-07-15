@@ -25,7 +25,7 @@
     <b>会員登録をしてください</b>
   <p>
   <h1>ユーザ名<br>
-  <?php echo form_error('name');?>
+    <?php echo form_error('name');?>
     <input type="text" name="name" value="<?php echo set_value('name'); ?>" size="50" /> 
   </h1>  
   <h1>パスワード<br>
@@ -40,4 +40,3 @@
   </form>
 </body>
 </html>
-

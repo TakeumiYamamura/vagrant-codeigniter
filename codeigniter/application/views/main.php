@@ -39,12 +39,12 @@
 </div>
 <button id="count">もっと見る</button><dt>
 <p>
-  <a href="logout">ログアウト</a>
+  <a href="<?php echo(base_url("index.php/twittermain/logout"));?>">ログアウト</a>
 </p>
 <script type ="text/javascript" src ="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script type ="text/javascript">
-const base_page = 1;
-var page = base_page;
+// const base_page = 1;
+var page = <?php echo $this->session->userdata('page');?>;
 function tweet(t){
   $.ajax({
     url: '/index.php/twittermain/get_list',
@@ -55,21 +55,21 @@ function tweet(t){
     success: function(json){
       var html = '';
       for(i in json){
-        var now =new Date();
+        var now = new Date();
         var tweettime = new Date(json[i].created);
         difference = now.getTime()-tweettime.getTime();
         if (difference > 1000*60*60*24){
           var day = Math.floor(difference /(1000*60*60*24));
-          html +='<fieldset><legend>'+ json[i].name +'</legend><dt><p>'+json[i].message+'</p><dt><p>'+day+'日前</p></fieldset>';
+          html += '<fieldset><legend>'+ json[i].name +'</legend><dt><p>'+json[i].message+'</p><dt><p>'+day+'日前</p></fieldset>';
         } else if (difference > 1000*60*60){
           var hour = Math.floor(difference/(1000*60*60));
-          html +='<fieldset><legend>'+ json[i].name +'</legend><dt><p>'+json[i].message+'</p><dt><p>'+hour+'時間前</p></fieldset>';
+          html += '<fieldset><legend>'+ json[i].name +'</legend><dt><p>'+json[i].message+'</p><dt><p>'+hour+'時間前</p></fieldset>';
         } else if(difference > 1000*60){
           var minute =Math.floor(difference/(1000*60));
-          html +='<fieldset><legend>'+ json[i].name +'</legend><dt><p>'+json[i].message+'</p><dt><p>'+minute+'分前</p></fieldset>';
+          html += '<fieldset><legend>'+ json[i].name +'</legend><dt><p>'+json[i].message+'</p><dt><p>'+minute+'分前</p></fieldset>';
         } else {
           var second =Math.floor(difference/(1000));
-          html +='<fieldset><legend>'+ json[i].name +'</legend><dt><p>'+json[i].message+'</p><dt><p>'+second+'秒前</p></fieldset>';
+          html += '<fieldset><legend>'+ json[i].name +'</legend><dt><p>'+json[i].message+'</p><dt><p>'+second+'秒前</p></fieldset>';
         }
       }
       $('#message').html('<ul>'+html+'</ul>');

@@ -27,4 +27,5 @@ class Twitter_posts_model extends CI_Model
     {
         $this->session->sess_destroy();
     }
+    
 }
