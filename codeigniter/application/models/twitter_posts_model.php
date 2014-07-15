@@ -14,16 +14,13 @@ class Twitter_posts_model extends CI_Model
         return $this->db->insert_id();
     }
 
-    public function get_tweet()
+    public function get_tweet($page)
     {   
-        $name=$this->session->userdata('name');
-        $this->db->select('*');
-        $this->db->from('posts');
-        $this->db->join('members','members.id = posts.id');
-        $this->db->where('name', $name);
-        $query =$this->db->get();
-        $row = $query->result_array();
-        return $row;
+        $id = $this->session->userdata('user_id');
+        $pages = 10 * $page; 
+        $this->db->select('*')->from('posts')->join('members','members.user_id = posts.user_id')->where('posts.user_id', $id)->order_by("tweet_id","desc")->limit($pages);
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     public function session_destroy()

@@ -17,7 +17,7 @@ class Twitterlogin extends CI_Controller
             return $this->load->view('login');
         }
         $this->Twitter_members_model->login();
-        redirect("twittermain/index");
+        redirect(base_url("index.php/twittermain/index"));
     }
 
 }

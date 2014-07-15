@@ -21,7 +21,7 @@ class Twitterregister extends CI_Controller
         $data['password']  = $this->input->post('password');
         $data['email']     = $this->input->post('email');
         $this->Twitter_members_model->register_db($data);
-        redirect("twittermain/index");
+        redirect( base_url("index.php/twittermain/index"));
     }
 
     public function email_check($str)

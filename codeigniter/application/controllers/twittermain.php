@@ -15,12 +15,13 @@ class Twittermain extends CI_Controller
         if ($check == "") {
         	return redirect("twitterlogin");
         }
-        $this->load->view('formsuccess');	
+        $this->load->view('main');	
 	}
 
 	public function get_list()
 	{
-        $json = $this->Twitter_posts_model->get_tweet();
+		$pages = $this->input->post('page');
+        $json = $this->Twitter_posts_model->get_tweet($pages);
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($json));
@@ -30,7 +31,7 @@ class Twittermain extends CI_Controller
 	{
 	    $str =$this->input->post('message');
 	    $data['message']=$str;
-		$data['id']     =$this->session->userdata('id');
+		$data['user_id']     =$this->session->userdata('user_id');
 	    $this->form_validation->set_rules('message', 'メッセージ', 'trim|required');
         if($this->form_validation->run() == true){
         	$data['message'] =str_replace("\n", "<br>", $str);
@@ -41,7 +42,7 @@ class Twittermain extends CI_Controller
 	public function logout()
 	{
 		$this->Twitter_posts_model->session_destroy();
-		redirect("twitterlogin/index");
+		redirect(base_url("index.php/twitterlogin/index"));
 	}
 
 }

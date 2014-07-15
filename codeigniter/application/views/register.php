@@ -1,23 +1,23 @@
 <html>
 <head>
-<title>会員登録画面</title>
-<style>
-body{ 
-  background-image: url(<?php echo(base_url());?>images/hanabi.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-h1{
-  text-shadow: 3px 3px 5px black;
-  text-align: center;
-  color: white;
-}
-p{
-  text-align: center;
-  color: white;
-}
-</style>
+  <title>会員登録画面</title>
+  <style>
+  body{ 
+    background-image: url(<?php echo(base_url("images/hanabi.jpg"));?>);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  h1{
+    text-shadow: 3px 3px 5px black;
+    text-align: center;
+    color: white;
+  }
+  p{
+    text-align: center;
+    color: white;
+  }
+  </style>
 </head>
 <body>
   <?php echo form_open('twitterregister'); ?>　
