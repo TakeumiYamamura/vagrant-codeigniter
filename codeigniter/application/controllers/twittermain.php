@@ -11,8 +11,6 @@ class Twittermain extends CI_Controller
 
 	public function index()
 	{
-		define("base_page", 1);
-		$this->session->set_userdata('page',base_page);
 		$check = $this->session->userdata('name');
         if ($check == "") {
         	return redirect(base_url("index.php/twitterlogin/index"));
@@ -22,11 +20,18 @@ class Twittermain extends CI_Controller
 
 	public function get_list()
 	{
-		$pages = $this->input->post('page');
-        $json = $this->Twitter_posts_model->get_tweet($pages);
+        $json = $this->Twitter_posts_model->get_tweet($this->input->post('page'),$this->input->post('add'));
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($json));
+	}
+
+	public function get_simple()
+	{
+        $json = $this->Twitter_posts_model->get_simple();
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($json));		
 	}
 
 	public function register()

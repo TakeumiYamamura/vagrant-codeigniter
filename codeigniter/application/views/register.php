@@ -2,18 +2,18 @@
 <head>
   <title>会員登録画面</title>
   <style>
-  body{ 
+  body { 
     background-image: url(<?php echo(base_url("images/hanabi.jpg"));?>);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
   }
-  h1{
+  h1 {
     text-shadow: 3px 3px 5px black;
     text-align: center;
     color: white;
   }
-  p{
+  p {
     text-align: center;
     color: white;
   }

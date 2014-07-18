@@ -10,7 +10,7 @@ class Twitter_members_model extends CI_Model
 
     function login()
     {
-        $this->db->select('*')->from('members')->where(array('password' => $this->input->post('password'),'email' => $this->input->post('email')));
+        $this->db->select('*')->from('members')->where(array('password' => $this->input->post('password'), 'email' => $this->input->post('email')));
         $query = $this->db->get();
         if($query->num_rows() != 0){
            $row = $query->row_array();
@@ -25,7 +25,7 @@ class Twitter_members_model extends CI_Model
     function register_db($data)
     {       
         $this->db->insert('members',$data);
-        $this->db->select('*')->from('members')->where('name',$data['name']);
+        $this->db->select('*')->from('members')->where('email', $data['email']);
         $query = $this->db->get();
         $row = $query->row_array();
         $newdata = array(
