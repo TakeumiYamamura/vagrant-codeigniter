@@ -61,13 +61,13 @@ function tweet(t, a){
         var now = new Date();
         var tweettime = new Date(json[i].created);
         difference = now.getTime()-tweettime.getTime();
-        if (difference > 1000*60*60*24){
+        if (difference > 1000*60*60*24) {
           var day = Math.floor(difference /(1000*60*60*24));
           html += '<fieldset><legend>' + json[i].name + '</legend><dt><p>' + json[i].message + '</p><dt><p>' + day + '日前</p></fieldset>';
-        } else if (difference > 1000*60*60){
+        } else if (difference > 1000*60*60) {
           var hour = Math.floor(difference/(1000*60*60));
           html += '<fieldset><legend>' + json[i].name + '</legend><dt><p>' + json[i].message + '</p><dt><p>' + hour + '時間前</p></fieldset>';
-        } else if(difference > 1000*60){
+        } else if (difference > 1000*60) {
           var minute =Math.floor(difference/(1000*60));
           html += '<fieldset><legend>' + json[i].name + '</legend><dt><p>' + json[i].message + '</p><dt><p>' + minute + '分前</p></fieldset>';
         } else {
