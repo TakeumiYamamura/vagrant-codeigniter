@@ -48,6 +48,7 @@ const base_add = 0;
 var page = base_page;
 var add = base_add;
 var html = '';
+
 function tweet(t, a){
   $.ajax({
     url: '/index.php/twittermain/get_list/',

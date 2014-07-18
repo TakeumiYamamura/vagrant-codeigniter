@@ -38,13 +38,13 @@ class Twittermain extends CI_Controller
 	{
 	    $str =$this->input->post('message');
 	    $data['message'] = $str;
-		$data['user_id'] = $this->session->userdata('user_id');
+        $data['user_id'] = $this->session->userdata('user_id');
 	    $this->form_validation->set_rules('message', 'メッセージ', 'trim|required');
         if($this->form_validation->run() == true){
-        	$data['message'] = str_replace("\n", "<br>", $str);
-        	echo $this->Twitter_posts_model->register($data);
+            $data['message'] = str_replace("\n", "<br>", $str);
+            echo $this->Twitter_posts_model->register($data);
         }
-	}
+    }
 
 	public function logout()
 	{
